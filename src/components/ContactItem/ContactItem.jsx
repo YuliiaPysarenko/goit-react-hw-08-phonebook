@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 
-const ContactItem = ({name, number}) => (
-    <span> {name}: {number}</span>
+const ContactItem = ({name, phone}) => (
+    <span> {name}: {phone}</span>
 )
 
 ContactItem.propTypes = {
     name: PropTypes.string.isRequired, 
-    number: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
 }
 
 

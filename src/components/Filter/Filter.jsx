@@ -1,16 +1,6 @@
-import styled from 'styled-components';
 import { nanoid } from "nanoid";
 import PropTypes from 'prop-types';
-
-const Label = styled.label`
-`
-
-const Input = styled.input`
-    display: block;
-    margin: 10px 0 20px;
-    padding: 2px;
-`
-
+import { Label, Input } from './FilterStyles';
 
 const filterinputId = nanoid();
 
