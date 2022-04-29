@@ -11,7 +11,7 @@ import Filter from '../Filter/Filter';
 
 export default function App() {
   const { data: contacts, isLoading: isLoadingFetching } = useFetchContactsQuery();
-  const [createContact, { isLoading: isLoadingCreating, isSuccess }] = useCreateContactMutation();
+  const [createContact] = useCreateContactMutation();
 
   const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
@@ -24,14 +24,6 @@ export default function App() {
     if (!existedContact) {
       createContact(data);
       toast.success('Contact is successfully added.');
-      // toast.promise(
-      //   createContact(data),
-      //    {
-      //     //  loading: 'Saving...',
-      //      success: toast.success('Contact is successfully added.'),
-      //      error: toast.error('Looks like something went wrong.'),
-      //    }
-      //  );
     } else {
       toast.error(`User ${data.name} already exists`)
     }
