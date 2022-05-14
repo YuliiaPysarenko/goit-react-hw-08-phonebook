@@ -28,7 +28,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           
-          <Route exact path='/' element={<HomeView />}/>
+          <Route index element={<HomeView />}/>
 
           <Route exact path="/register" element={<PublicRoute/>} restricted>
             <Route exact path='/register' element={<RegisterView />}/>
