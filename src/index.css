@@ -5,7 +5,26 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  /* position: relative; */
+  /* overflow-y: auto; */
+  scroll-behavior: auto;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bg-image {
+  height: 100vh;
+  background-image: url(../public/watercolor-4116932.png);
+  background-size:auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* .border-left {
+  border-left: 1px solid #ced4da;
+  padding-left: 3rem;
+} */

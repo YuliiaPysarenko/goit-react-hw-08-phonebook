@@ -1,14 +1,22 @@
 import { nanoid } from "nanoid";
-import PropTypes from 'prop-types';
-import { Label, Input } from './FilterStyles';
+import { useDispatch } from 'react-redux';
+import { changeFilter } from '../../redux/contacts';
+import { Form } from 'react-bootstrap';
 
 const filterinputId = nanoid();
 
-const Filter = ({handleChange}) => {
+const Filter = () => {
+    const dispatch = useDispatch();
+
+    const handleChange = e => {
+      const value = e.target.value;
+      dispatch(changeFilter(value));
+    };
+
     return (
-        <Label htmlFor={filterinputId}>
-            Find contacts by name
-            <Input
+        <Form.Group className="mb-3">
+            <Form.Label htmlFor={filterinputId}>Find by Name</Form.Label>
+            <Form.Control 
                 type="text"
                 name="filter"
                 pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -16,13 +24,8 @@ const Filter = ({handleChange}) => {
                 id={filterinputId}
                 onChange={handleChange}
                 required />
-        </Label>
+        </Form.Group>
     )
-}
-
-
-Filter.propTypes = {
-    handleChange: PropTypes.func.isRequired,
 }
 
 export default Filter;

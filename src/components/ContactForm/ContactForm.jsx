@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { connect } from 'react-redux';
 import { nanoid } from 'nanoid';
+import { contactsOperations } from '../../redux/contacts';
+import { Form, Button } from 'react-bootstrap';
 
-import { StyledForm, Label, Input, Button } from './ContactFormStyles';
-
-export default function ContactForm({ onSubmit }) {
+function ContactForm({ onSubmit }) {
   const [name, setName] = useState('');
-  const [phone, setNumber] = useState('');
+  const [number, setNumber] = useState('');
 
   const nameInputId = nanoid();
   const numberInputId = nanoid();
@@ -18,7 +19,7 @@ export default function ContactForm({ onSubmit }) {
         setName(value);
         break;
 
-      case 'phone':
+      case 'number':
         setNumber(value);
         break;
 
@@ -29,7 +30,7 @@ export default function ContactForm({ onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit({ name, phone });
+    onSubmit({ name, number });
     reset();
   };
 
@@ -39,10 +40,11 @@ export default function ContactForm({ onSubmit }) {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <Label htmlFor={nameInputId}>
-        Name
-        <Input
+    <Form onSubmit={handleSubmit}>
+
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor={nameInputId}>Name</Form.Label>
+        <Form.Control
           type="text"
           name="username"
           value={name}
@@ -52,23 +54,33 @@ export default function ContactForm({ onSubmit }) {
           onChange={handleChange}
           required
         />
-      </Label>
+      </Form.Group>
 
-      <Label htmlFor={numberInputId}>
-        Number
-        <Input
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor={numberInputId}>Number</Form.Label>
+        <Form.Control
           type="tel"
-          name="phone"
-          value={phone}
+          name="number"
+          value={number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           id={numberInputId}
           onChange={handleChange}
           required
         />
-      </Label>
+      </Form.Group>
 
       <Button type="submit">Add contact</Button>
-    </StyledForm>
+    </Form>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmit: data => {
+      dispatch(contactsOperations.addContact(data))
+    },
+  }
+};
+
+export default connect(null, mapDispatchToProps)(ContactForm);

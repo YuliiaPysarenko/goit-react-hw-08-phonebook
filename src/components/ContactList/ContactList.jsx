@@ -1,39 +1,35 @@
-import { Li, Button } from './ContactListStyles';
-import { useDeleteContactMutation } from 'redux/items/contactsSlice';
+import { useSelector } from 'react-redux';
+import { contactsSelectors } from '../../redux/contacts';
 import ContactItem from '../ContactItem/ContactItem';
-import PropTypes from 'prop-types';
-import { Oval } from 'react-loader-spinner';
+import { FallingLines } from 'react-loader-spinner';
+import { Table} from 'react-bootstrap';
 
-const ContactList = ({ filter, items }) => {
-  const filteredItems = items.filter(item =>
-    item.name.toLowerCase().includes(filter.toLowerCase())
-  );
-  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+const ContactList = () => {
+  const contacts = useSelector(contactsSelectors.getVisibleContacts);
+  const isLoadingContacts = useSelector(contactsSelectors.getLoading);
 
   return (
-    <ul>
-      {filteredItems.map(({ id, name, phone }) => (
-        <Li key={id}>
-          <ContactItem key={id} name={name} phone={phone} />
-          <Button onClick={() => deleteContact(id)} disabled={isDeleting}>
-            Delete
-            {isDeleting && <Oval color="#00BFFF" height={10} width={10} />}
-          </Button>
-        </Li>
-      ))}
-    </ul>
+    <>
+      {contacts ?
+        <Table hover>
+          <thead>
+            <tr>
+              <th style={{width:'40%'}}>Name</th>
+              <th style={{width:'40%'}}>Phone Number</th>
+              <th style={{width:'20%'}}></th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.map(contact => (
+              <ContactItem contact={contact} key={contact.id} />
+            ))}
+          </tbody>
+        </Table> : null}
+      {isLoadingContacts && (
+      <div style={{textAlign: 'center'}}><FallingLines width="110" color="#0d6efd" /></div>
+      )}
+    </>
   );
-};
-
-ContactList.propTypes = {
-  filter: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default ContactList;
