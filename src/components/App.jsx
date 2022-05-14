@@ -30,16 +30,16 @@ export default function App() {
           
           <Route index element={<HomeView />}/>
 
-          <Route exact path="/register" element={<PublicRoute/>} restricted>
-            <Route exact path='/register' element={<RegisterView />}/>
+          <Route path="/register" element={<PublicRoute/>} restricted>
+            <Route path='/register' element={<RegisterView />}/>
           </Route>
           
-          <Route exact path="/login" element={<PublicRoute/>} restricted>
-            <Route exact path='/login' element={<LoginView />}/>
+          <Route path="/login" element={<PublicRoute/>} restricted>
+            <Route path='/login' element={<LoginView />}/>
           </Route>
 
-          <Route exact path='/contacts' element={<PrivateRoute/>}>
-            <Route exact path='/contacts' element={<ContactsView/>}/>
+          <Route path='/contacts' element={<PrivateRoute/>}>
+            <Route path='/contacts' element={<ContactsView/>}/>
           </Route>
 
         </Route>
